@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suscripción Newsletter - FCP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(220, 20, 60, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(220, 20, 60, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 45px;
+            border-radius: 20px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.5),
+                        0 0 0 1px rgba(220, 20, 60, 0.1);
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .logo-text {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #DC143C 0%, #8B0000 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-subtitle {
+            font-size: 13px;
+            color: #666;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            color: #1a1a1a;
+            margin-bottom: 10px;
+            font-size: 26px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #555;
+            margin-bottom: 30px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #1a1a1a;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        input[type="text"],
+        input[type="email"] {
+            width: 100%;
+            padding: 13px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s;
+            font-family: inherit;
+            background: #fafafa;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus {
+            outline: none;
+            border-color: #DC143C;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(220, 20, 60, 0.08);
+        }
+
+        .checkbox-group {
+            margin: 28px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px;
+            background: #f8f8f8;
+            border-radius: 10px;
+            border: 1px solid #e8e8e8;
+        }
+
+        input[type="checkbox"] {
+            margin-top: 4px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            flex-shrink: 0;
+            accent-color: #DC143C;
+        }
+
+        .checkbox-label {
+            color: #444;
+            font-size: 13px;
+            line-height: 1.7;
+            cursor: pointer;
+        }
+
+        .checkbox-label a {
+            color: #DC143C;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .checkbox-label a:hover {
+            text-decoration: underline;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #DC143C 0%, #8B0000 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(220, 20, 60, 0.4);
+            background: linear-gradient(135deg, #FF1744 0%, #DC143C 100%);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .success-message {
+            display: none;
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+            padding: 16px 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 2px solid #c3e6cb;
+            font-weight: 500;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .error {
+            color: #DC143C;
+            font-size: 13px;
+            margin-top: 6px;
+            display: none;
+            font-weight: 500;
+        }
+
+        .error.show {
+            display: block;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 25px;
+            }
+
+            .logo-text {
+                font-size: 26px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-section">
+            <div class="logo-text">♠ FCP ♦</div>
+            <div class="logo-subtitle">Federación Colombiana de Poker</div>
+        </div>
+
+        <h1>📬 Suscríbete</h1>
+        <p class="subtitle">Recibe novedades y contenido exclusivo directamente en tu correo electrónico.</p>
+        
+        <form id="newsletterForm">
+            <div class="form-group">
+                <label for="nombre">Nombre completo</label>
+                <input 
+                    type="text" 
+                    id="nombre" 
+                    name="nombre" 
+                    placeholder="Ingresa tu nombre"
+                    required
+                >
+                <span class="error" id="nombreError">Por favor, ingresa tu nombre</span>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Correo electrónico</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    placeholder="tu@correo.com"
+                    required
+                >
+                <span class="error" id="emailError">Por favor, ingresa un correo válido</span>
+            </div>
+
+            <div class="checkbox-group">
+                <input 
+                    type="checkbox" 
+                    id="lgpd" 
+                    name="lgpd"
+                    required
+                >
+                <label for="lgpd" class="checkbox-label">
+                    Acepto recibir comunicaciones por correo electrónico y estoy de acuerdo con la <a href="#" target="_blank">Política de Privacidad</a>. Soy consciente de que puedo cancelar mi suscripción en cualquier momento.
+                </label>
+            </div>
+            <span class="error" id="lgpdError">Debes aceptar los términos para continuar</span>
+
+            <button type="submit">Quiero recibir el newsletter</button>
+
+            <div class="success-message" id="successMessage">
+                ✅ ¡Registro exitoso! Verifica tu correo para confirmar la suscripción.
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('newsletterForm');
+        const nombre = document.getElementById('nombre');
+        const email = document.getElementById('email');
+        const lgpd = document.getElementById('lgpd');
+        const successMessage = document.getElementById('successMessage');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Limpia errores anteriores
+            document.querySelectorAll('.error').forEach(el => el.classList.remove('show'));
+            
+            let isValid = true;
+
+            // Validación del nombre
+            if (nombre.value.trim() === '') {
+                document.getElementById('nombreError').classList.add('show');
+                isValid = false;
+            }
+
+            // Validación del email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email.value.trim())) {
+                document.getElementById('emailError').classList.add('show');
+                isValid = false;
+            }
+
+            // Validación del checkbox LGPD
+            if (!lgpd.checked) {
+                document.getElementById('lgpdError').classList.add('show');
+                isValid = false;
+            }
+
+            // Si todo está válido, envía para n8n
+            if (isValid) {
+                // SUSTITUYE POR LA URL DE TU WEBHOOK DE N8N
+                const webhookUrl = 'https://nexttech-n8n-nexthub.haas2a.easypanel.host/webhook/forms-FCP';
+                
+                const datos = {
+                    nombre: nombre.value,
+                    email: email.value,
+                    lgpd: lgpd.checked,
+                    fecha_registro: new Date().toISOString(),
+                    origen: 'Formulario FCP'
+                };
+
+                // Envía al n8n
+                fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(datos)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Éxito:', data);
+                    successMessage.classList.add('show');
+                    form.reset();
+
+                    setTimeout(() => {
+                        successMessage.classList.remove('show');
+                    }, 5000);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    alert('Hubo un error al procesar tu registro. Intenta nuevamente.');
+                });
+            }
+        });
+
+        // Elimina error al escribir
+        nombre.addEventListener('input', () => {
+            document.getElementById('nombreError').classList.remove('show');
+        });
+
+        email.addEventListener('input', () => {
+            document.getElementById('emailError').classList.remove('show');
+        });
+
+        lgpd.addEventListener('change', () => {
+            document.getElementById('lgpdError').classList.remove('show');
+        });
+    </script>
+</body>
+</html>
