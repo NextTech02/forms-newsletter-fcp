@@ -319,11 +319,20 @@
                 isValid = false;
             }
 
-            // Validación del email
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email.value.trim())) {
+            // Validación del email más robusta
+            const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            const emailValue = email.value.trim().toLowerCase();
+            
+            if (!emailRegex.test(emailValue)) {
                 document.getElementById('emailError').classList.add('show');
                 isValid = false;
+            } else if (emailValue.split('@')[1]) {
+                // Valida que tenha um domínio válido após o @
+                const domain = emailValue.split('@')[1];
+                if (domain.indexOf('.') === -1 || domain.length < 3) {
+                    document.getElementById('emailError').classList.add('show');
+                    isValid = false;
+                }
             }
 
             // Validación del checkbox LGPD
@@ -335,7 +344,7 @@
             // Si todo está válido, envía para n8n
             if (isValid) {
                 // SUSTITUYE POR LA URL DE TU WEBHOOK DE N8N
-                const webhookUrl = 'https://nexttech-n8n-nexthub.haas2a.easypanel.host/webhook/forms-FCP';
+                const webhookUrl = 'https://tu-n8n.com/webhook/tu-webhook-id';
                 
                 const datos = {
                     nombre: nombre.value,
@@ -353,15 +362,16 @@
                     },
                     body: JSON.stringify(datos)
                 })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Éxito:', data);
-                    successMessage.classList.add('show');
-                    form.reset();
-
-                    setTimeout(() => {
-                        successMessage.classList.remove('show');
-                    }, 5000);
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Éxito: Datos enviados correctamente');
+                        // Redireciona para página de agradecimento após 500ms
+                        setTimeout(() => {
+                            window.location.href = 'gracias.html';
+                        }, 500);
+                    } else {
+                        throw new Error('Error en el servidor');
+                    }
                 })
                 .catch((error) => {
                     console.error('Error:', error);
