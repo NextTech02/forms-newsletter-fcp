@@ -53,23 +53,10 @@
             border-bottom: 2px solid #f0f0f0;
         }
 
-        .logo-text {
-            font-size: 32px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #DC143C 0%, #8B0000 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 8px;
-            letter-spacing: -0.5px;
-        }
-
-        .logo-subtitle {
-            font-size: 13px;
-            color: #666;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .logo-img {
+            max-width: 180px;
+            height: auto;
+            margin-bottom: 10px;
         }
 
         h1 {
@@ -244,8 +231,7 @@
 <body>
     <div class="container">
         <div class="logo-section">
-            <div class="logo-text">♠ FCP ♦</div>
-            <div class="logo-subtitle">Federación Colombiana de Poker</div>
+            <img src="logo1_fcp_branco.png" alt="FCP - Federación Colombiana de Poker" class="logo-img">
         </div>
 
         <h1>📬 Suscríbete</h1>
@@ -347,10 +333,7 @@
                 
                 const datos = {
                     nombre: nombre.value,
-                    email: email.value,
-                    lgpd: lgpd.checked,
-                    fecha_registro: new Date().toISOString(),
-                    origen: 'Formulario FCP'
+                    email: email.value
                 };
 
                 // Envía al n8n
