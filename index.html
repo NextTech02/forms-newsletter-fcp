@@ -227,6 +227,212 @@
                 font-size: 22px;
             }
         }
+
+        /* Estilos del Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.show {
+            display: block;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 2% auto;
+            padding: 0;
+            border-radius: 16px;
+            max-width: 800px;
+            width: 90%;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+            animation: slideDown 0.4s ease;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #DC143C 0%, #8B0000 100%);
+            color: white;
+            padding: 25px 30px;
+            border-radius: 16px 16px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .close-modal {
+            color: white;
+            font-size: 32px;
+            font-weight: 300;
+            cursor: pointer;
+            transition: all 0.3s;
+            line-height: 1;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 30px;
+            overflow-y: auto;
+            flex: 1;
+            color: #333;
+            line-height: 1.7;
+        }
+
+        .modal-body h3 {
+            color: #DC143C;
+            font-size: 17px;
+            font-weight: 700;
+            margin-top: 25px;
+            margin-bottom: 12px;
+        }
+
+        .modal-body h3:first-child {
+            margin-top: 0;
+        }
+
+        .modal-body p {
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #444;
+        }
+
+        .modal-body ul {
+            margin: 12px 0 20px 0;
+            padding-left: 25px;
+        }
+
+        .modal-body li {
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .modal-body strong {
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+
+        .modal-body .last-updated {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e8e8e8;
+            font-size: 13px;
+            color: #666;
+            text-align: center;
+        }
+
+        .modal-footer {
+            padding: 20px 30px;
+            background: #f8f8f8;
+            border-radius: 0 0 16px 16px;
+            border-top: 1px solid #e8e8e8;
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn-close-modal {
+            background: linear-gradient(135deg, #DC143C 0%, #8B0000 100%);
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3);
+        }
+
+        .btn-close-modal:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(220, 20, 60, 0.4);
+            background: linear-gradient(135deg, #FF1744 0%, #DC143C 100%);
+        }
+
+        /* Scrollbar personalizada para el modal */
+        .modal-body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal-body::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .modal-body::-webkit-scrollbar-thumb {
+            background: #DC143C;
+            border-radius: 10px;
+        }
+
+        .modal-body::-webkit-scrollbar-thumb:hover {
+            background: #8B0000;
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                margin: 5% auto;
+                width: 95%;
+                max-height: 85vh;
+            }
+
+            .modal-header h2 {
+                font-size: 18px;
+            }
+
+            .modal-body {
+                padding: 20px;
+            }
+
+            .modal-body h3 {
+                font-size: 16px;
+            }
+
+            .close-modal {
+                font-size: 28px;
+                width: 30px;
+                height: 30px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -271,7 +477,7 @@
                     required
                 >
                 <label for="lgpd" class="checkbox-label">
-                    Acepto recibir comunicaciones por correo electrónico y estoy de acuerdo con la <a href="#" target="_blank">Política de Privacidad</a>. Soy consciente de que puedo cancelar mi suscripción en cualquier momento.
+                    Acepto recibir comunicaciones por correo electrónico y estoy de acuerdo con la <a href="#" id="openPrivacyModal">Política de Privacidad</a>. Soy consciente de que puedo cancelar mi suscripción en cualquier momento.
                 </label>
             </div>
             <span class="error" id="lgpdError">Debes aceptar los términos para continuar</span>
@@ -282,6 +488,127 @@
                 ✅ ¡Registro exitoso! Verifica tu correo para confirmar la suscripción.
             </div>
         </form>
+    </div>
+
+    <!-- Modal de Política de Privacidad -->
+    <div id="privacyModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Política de Privacidad y Protección de Datos</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <h3>1. Identificación del Responsable del Tratamiento</h3>
+                <p><strong>Federación Colombiana de Poker (FCP)</strong> es el responsable del tratamiento de tus datos personales. Nos comprometemos a proteger tu privacidad y cumplir con la Ley General de Protección de Datos (LGPD) y demás normativas aplicables.</p>
+
+                <h3>2. Datos Personales Recopilados</h3>
+                <p>Al suscribirte a nuestro newsletter, recopilamos los siguientes datos:</p>
+                <ul>
+                    <li><strong>Nombre completo:</strong> Para personalizar las comunicaciones</li>
+                    <li><strong>Correo electrónico:</strong> Para enviar el newsletter y comunicaciones relacionadas</li>
+                    <li><strong>Fecha y hora de suscripción:</strong> Para fines de registro y auditoría</li>
+                    <li><strong>Dirección IP:</strong> Para seguridad y prevención de fraudes</li>
+                </ul>
+
+                <h3>3. Finalidad del Tratamiento de Datos</h3>
+                <p>Tus datos personales serán utilizados exclusivamente para:</p>
+                <ul>
+                    <li>Envío de newsletter con novedades, eventos y contenido sobre poker</li>
+                    <li>Informar sobre torneos y campeonatos organizados por FCP</li>
+                    <li>Divulgación de productos, servicios y ofertas de la Federación Colombiana de Poker</li>
+                    <li>Promoción de eventos, cursos, capacitaciones y actividades relacionadas con poker</li>
+                    <li>Compartir contenido exclusivo, promociones y beneficios para suscriptores</li>
+                    <li>Mejorar nuestros servicios y personalizar la experiencia del usuario</li>
+                    <li>Realizar encuestas de satisfacción y estudios de mercado</li>
+                    <li>Cumplir con obligaciones legales y regulatorias</li>
+                </ul>
+
+                <h3>4. Base Legal para el Tratamiento</h3>
+                <p>El tratamiento de tus datos se basa en tu <strong>consentimiento explícito</strong>, otorgado al marcar la casilla de aceptación en el formulario de suscripción.</p>
+
+                <h3>5. Compartir Datos con Terceros</h3>
+                <p>Tus datos personales no serán vendidos, alquilados ni compartidos con terceros para fines comerciales. Únicamente compartimos datos con:</p>
+                <ul>
+                    <li><strong>Proveedores de servicios:</strong> Plataformas de email marketing y servicios de hosting necesarios para el envío del newsletter</li>
+                    <li><strong>Autoridades competentes:</strong> Cuando sea requerido por ley o para proteger nuestros derechos legales</li>
+                </ul>
+                <p>Todos nuestros proveedores están obligados contractualmente a mantener la confidencialidad y seguridad de tus datos.</p>
+
+                <h3>6. Seguridad de los Datos</h3>
+                <p>Implementamos medidas técnicas y organizativas apropiadas para proteger tus datos personales contra acceso no autorizado, pérdida, destrucción o alteración, incluyendo:</p>
+                <ul>
+                    <li>Cifrado de datos en tránsito (HTTPS/SSL)</li>
+                    <li>Controles de acceso restringido</li>
+                    <li>Monitoreo y auditorías de seguridad regulares</li>
+                    <li>Políticas internas de protección de datos</li>
+                </ul>
+
+                <h3>7. Periodo de Conservación</h3>
+                <p>Conservaremos tus datos personales mientras:</p>
+                <ul>
+                    <li>Mantengas tu suscripción activa al newsletter</li>
+                    <li>Sea necesario para cumplir con obligaciones legales</li>
+                    <li>Existan fines legítimos de negocio (máximo 5 años tras la baja)</li>
+                </ul>
+                <p>Tras la cancelación de tu suscripción, tus datos serán eliminados o anonimizados en un plazo máximo de 30 días, excepto cuando la ley requiera su conservación.</p>
+
+                <h3>8. Tus Derechos como Titular de Datos</h3>
+                <p>De acuerdo con la LGPD, tienes derecho a:</p>
+                <ul>
+                    <li><strong>Acceso:</strong> Solicitar una copia de tus datos personales</li>
+                    <li><strong>Rectificación:</strong> Corregir datos inexactos o incompletos</li>
+                    <li><strong>Eliminación:</strong> Solicitar la eliminación de tus datos (derecho al olvido)</li>
+                    <li><strong>Portabilidad:</strong> Recibir tus datos en formato estructurado</li>
+                    <li><strong>Oposición:</strong> Oponerte al tratamiento de tus datos</li>
+                    <li><strong>Limitación:</strong> Solicitar la limitación del tratamiento</li>
+                    <li><strong>Revocación del consentimiento:</strong> Retirar tu consentimiento en cualquier momento</li>
+                    <li><strong>No ser objeto de decisiones automatizadas:</strong> Cuando produzcan efectos significativos</li>
+                </ul>
+
+                <h3>9. Cancelación de Suscripción</h3>
+                <p>Puedes cancelar tu suscripción en cualquier momento mediante:</p>
+                <ul>
+                    <li>El enlace "Cancelar suscripción" incluido en cada email</li>
+                    <li>Enviando un correo a: <strong>fcp@federacioncolombianadepoker.com.co</strong></li>
+                    <li>Contactando a través de nuestro sitio web oficial</li>
+                </ul>
+                <p>Tu solicitud será procesada en un plazo máximo de 5 días hábiles.</p>
+
+                <h3>10. Transferencia Internacional de Datos</h3>
+                <p>Tus datos pueden ser almacenados o procesados en servidores ubicados fuera de Colombia. En estos casos, garantizamos que se aplicarán niveles de protección equivalentes a los establecidos por la LGPD mediante cláusulas contractuales estándar.</p>
+
+                <h3>11. Uso de Cookies y Tecnologías Similares</h3>
+                <p>Nuestro sitio web puede utilizar cookies técnicas esenciales para su funcionamiento. No utilizamos cookies de seguimiento o publicidad sin tu consentimiento previo.</p>
+
+                <h3>12. Menores de Edad</h3>
+                <p>Nuestros servicios están dirigidos a personas mayores de 18 años. No recopilamos intencionalmente datos de menores. Si detectamos que hemos recopilado datos de un menor, procederemos a su eliminación inmediata.</p>
+
+                <h3>13. Cambios en la Política de Privacidad</h3>
+                <p>Nos reservamos el derecho de modificar esta Política de Privacidad. Cualquier cambio significativo será comunicado a través del newsletter o en nuestro sitio web con al menos 30 días de anticipación.</p>
+
+                <h3>14. Contacto y Reclamaciones</h3>
+                <p>Para ejercer tus derechos o realizar consultas sobre el tratamiento de tus datos personales:</p>
+                <ul>
+                    <li><strong>Email:</strong> fcp@federacioncolombianadepoker.com.co</li>
+                    <li><strong>Sitio web:</strong> https://federacioncolombianadepoker.com.co</li>
+                </ul>
+                <p>También tienes derecho a presentar una reclamación ante la autoridad de protección de datos competente si consideras que el tratamiento de tus datos viola la normativa aplicable.</p>
+
+                <h3>15. Consentimiento</h3>
+                <p>Al marcar la casilla de aceptación y enviar el formulario de suscripción, confirmas que:</p>
+                <ul>
+                    <li>Has leído y comprendido esta Política de Privacidad</li>
+                    <li>Consientes el tratamiento de tus datos personales según lo descrito</li>
+                    <li>Eres mayor de 18 años</li>
+                    <li>La información proporcionada es veraz y exacta</li>
+                </ul>
+
+                <p class="last-updated"><strong>Última actualización:</strong> Diciembre 2025</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-close-modal">Entendido</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -374,6 +701,47 @@
 
         lgpd.addEventListener('change', () => {
             document.getElementById('lgpdError').classList.remove('show');
+        });
+
+        // Control del Modal de Política de Privacidad
+        const privacyModal = document.getElementById('privacyModal');
+        const openPrivacyModalLink = document.getElementById('openPrivacyModal');
+        const closeModalBtn = document.querySelector('.close-modal');
+        const closeModalFooterBtn = document.querySelector('.btn-close-modal');
+
+        // Abrir modal
+        openPrivacyModalLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            privacyModal.classList.add('show');
+            document.body.style.overflow = 'hidden'; // Previene scroll del body
+        });
+
+        // Cerrar modal con X
+        closeModalBtn.addEventListener('click', () => {
+            privacyModal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        });
+
+        // Cerrar modal con botón
+        closeModalFooterBtn.addEventListener('click', () => {
+            privacyModal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        });
+
+        // Cerrar modal al hacer clic fuera del contenido
+        privacyModal.addEventListener('click', (e) => {
+            if (e.target === privacyModal) {
+                privacyModal.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Cerrar modal con tecla ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && privacyModal.classList.contains('show')) {
+                privacyModal.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            }
         });
     </script>
 </body>
