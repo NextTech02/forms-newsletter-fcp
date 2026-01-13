@@ -661,7 +661,9 @@
                 
                 const datos = {
                     nombre: nombre.value,
-                    email: email.value
+                    email: email.value,
+                    lgpd: lgpd.checked,
+                    subscribed_at: new Date().toISOString()
                 };
 
                 // Envía al n8n
